@@ -27,6 +27,7 @@ namespace CoursesWorkshop
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationContext>();
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IInstructorRepository, InstructorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
