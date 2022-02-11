@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Instructor>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@foreach(Instructor instructor in Model)
+{
+    <h2>Name: @instructor.FirstName @instructor.LastName</h2>
+    <p>Department: @instructor.Department</p>
+}
