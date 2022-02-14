@@ -1,5 +1,6 @@
 ﻿using CoursesWorkshop.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CoursesWorkshop.Repositories
 {
@@ -20,7 +21,7 @@ namespace CoursesWorkshop.Repositories
 
         public List<Instructor> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.Instructors.ToList();
         }
 
         public Instructor GetById(int id)
