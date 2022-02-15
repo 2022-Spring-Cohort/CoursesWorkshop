@@ -7,5 +7,9 @@ namespace CoursesWorkshop.Repositories
     {
         List<Course> GetAll();
         Course GetById(int id);
+
+        void Update(Course course);
+        void Create(Course course);
+        void Delete(int id);
     }
 }

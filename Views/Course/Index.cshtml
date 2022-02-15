@@ -5,7 +5,10 @@
 @{
 }
 
+<h1>Courses</h1>
+<a class="btn btn-primary btn-sm" href="/Course/Add">Add Course</a>
+
 @foreach(Course course in Model)
 {
-    <h2><a href="/Course/Detail/@course.Id">@course.Name</a></h2>
+    <h2><a href="/Course/Detail/@course.Id">@course.Name</a> | <a class="btn btn-danger btn-sm" href="/Course/Delete/@course.Id">Delete</a></h2>
 }

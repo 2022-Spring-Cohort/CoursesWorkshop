@@ -1,6 +1,7 @@
 ﻿using CoursesWorkshop.Models;
 using CoursesWorkshop.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,6 +26,13 @@ namespace CoursesWorkshop.Controllers
             return View(_context.Courses.ToList());
         }
 
+        public IActionResult Delete(int id)
+        {
+            _courseRepo.Delete(id);
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Detail(int id)
         {
             return View(_courseRepo.GetById(id));
@@ -47,9 +55,36 @@ namespace CoursesWorkshop.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Instructors = _instructorRepo.GetAll();
+
+            return View(_courseRepo.GetById(id));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, Course model)
+        {
+            ViewBag.Instructors = _instructorRepo.GetAll();
+            ViewBag.Success = "";
+
+            try
+            {
+                _courseRepo.Update(model);
+                ViewBag.Success = "You have successfully changed this course.";
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Error = "There was an issue saving your changes. Please contact administrator.";
+            }
+            
+
+            return View(model);
+        }
+
         public IActionResult AddByInstructorId(int instructorId)
         {
-            return View(new Course() { InstructorId = instructorId });
+            return View(new Course() { InstructorId = instructorId, Instructor = _context.Instructors.Find(instructorId) });
         }
 
         [HttpPost]
