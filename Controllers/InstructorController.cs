@@ -37,5 +37,26 @@ namespace CoursesWorkshop.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult AddCourse(int id)
+        {
+            ViewBag.Courses = _context.Courses.ToList();
+
+            Instructor result = _context.Instructors.Find(id);
+
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult AddCourse(Instructor model, int CourseId)
+        {
+            //Instructor editInstructor = _context.Instructors.Find(model.Id);
+
+            Course course = _context.Courses.Find(CourseId);
+            course.InstructorId = model.Id;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }

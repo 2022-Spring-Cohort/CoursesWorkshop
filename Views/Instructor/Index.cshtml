@@ -7,6 +7,19 @@
 
 @foreach(Instructor instructor in Model)
 {
-    <h2>Name: @instructor.FirstName @instructor.LastName</h2>
+    <h2>Name: @instructor.FullName</h2>
     <p>Department: @instructor.Department</p>
+
+    @if(instructor.Courses != null)
+    {
+        <h3>Courses</h3>
+        <a class="btn btn-primary btn-sm" href="/Course/AddByInstructorId/?instructorId=@instructor.Id">Add Course</a>
+        <ul>
+            @foreach(Course course in instructor.Courses)
+            {
+                <li>@course.Name - @course.DepartmentCode - @course.Building @course.RoomNumber</li>
+            }
+        </ul>
+    }
+
 }

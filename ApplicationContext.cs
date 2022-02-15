@@ -11,6 +11,7 @@ namespace CoursesWorkshop
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             builder.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=Courses2022; Trusted_connection=True");
+            builder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

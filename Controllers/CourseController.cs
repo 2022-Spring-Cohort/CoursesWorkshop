@@ -46,5 +46,19 @@ namespace CoursesWorkshop.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult AddByInstructorId(int instructorId)
+        {
+            return View(new Course() { InstructorId = instructorId });
+        }
+
+        [HttpPost]
+        public IActionResult AddByInstructorId(Course model)
+        {
+            _context.Courses.Add(model);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Instructor");
+        }
     }
 }
