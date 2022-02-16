@@ -1,3 +1,4 @@
+using CoursesWorkshop.Models;
 using CoursesWorkshop.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,8 +27,10 @@ namespace CoursesWorkshop
         {
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationContext>();
-            services.AddScoped<ICourseRepository, CourseRepository>();
-            services.AddScoped<IInstructorRepository, InstructorRepository>();
+            //services.AddScoped<ICourseRepository, CourseRepository>();
+            //services.AddScoped<IInstructorRepository, InstructorRepository>();
+            services.AddScoped<IGenericRepository<Course>, GenericRepository<Course>>();
+            services.AddScoped<IGenericRepository<Instructor>, GenericRepository<Instructor>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

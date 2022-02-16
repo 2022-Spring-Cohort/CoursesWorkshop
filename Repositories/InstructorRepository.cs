@@ -26,7 +26,7 @@ namespace CoursesWorkshop.Repositories
 
         public Instructor GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Instructors.Find(id);
         }
     }
 }

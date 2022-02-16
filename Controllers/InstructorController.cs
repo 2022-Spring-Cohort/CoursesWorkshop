@@ -8,8 +8,8 @@ namespace CoursesWorkshop.Controllers
     public class InstructorController : Controller
     {
         private ApplicationContext _context;
-        private IInstructorRepository _repo;
-        public InstructorController(IInstructorRepository repo)
+        private IGenericRepository<Instructor> _repo;
+        public InstructorController(IGenericRepository<Instructor> repo)
         {
             _context = new ApplicationContext();
             _repo = repo;
@@ -33,7 +33,7 @@ namespace CoursesWorkshop.Controllers
                 return View(instructor);
             }
 
-            _repo.Add(instructor);
+            _repo.Create(instructor);
 
             return RedirectToAction("Index");
         }
@@ -57,6 +57,30 @@ namespace CoursesWorkshop.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Detail(int id)
+        {
+            Instructor model = _repo.GetById(id);
+
+            return View(model);
+        }
+
+        public IActionResult Edit(int id)
+        {
+
+            return View(_context.Instructors.Find(id));
+        }
+        [HttpPost]
+        public IActionResult Edit(int id, Instructor model) 
+        {
+            //_repo.Update(model);
+
+            _context.Instructors.Update(model);
+            _context.SaveChanges();
+
+            //return View(model);
+            return RedirectToAction("Detail", new { id = model.Id });
         }
     }
 }

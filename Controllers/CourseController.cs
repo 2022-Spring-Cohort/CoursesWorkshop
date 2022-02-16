@@ -10,12 +10,12 @@ namespace CoursesWorkshop.Controllers
     public class CourseController : Controller
     {
         private ApplicationContext _context;
-        private ICourseRepository _courseRepo;
-        private IInstructorRepository _instructorRepo;
-        public CourseController(ICourseRepository courseRepo, IInstructorRepository instructorRepo)
+        private IGenericRepository<Course> _courseRepo;
+        private IGenericRepository<Instructor> _instructorRepo;
+        public CourseController(IGenericRepository<Course> courseRepo, IGenericRepository<Instructor> instructorRepo)
         {
-            _courseRepo = courseRepo;
-            _instructorRepo = instructorRepo;
+            _courseRepo = new GenericRepository<Course>();
+            _instructorRepo = new GenericRepository<Instructor>();
 
             _context = new ApplicationContext();
         }
@@ -23,12 +23,22 @@ namespace CoursesWorkshop.Controllers
         public IActionResult Index()
         {
             //return View(_repo.GetAll());
+
             return View(_context.Courses.ToList());
         }
 
         public IActionResult Delete(int id)
         {
-            _courseRepo.Delete(id);
+            
+
+            return View(_courseRepo.GetById(id));
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id, Course model)
+        {
+            Course courseToDelete = _courseRepo.GetById(id);
+            _courseRepo.Delete(courseToDelete);
 
             return RedirectToAction("Index");
         }
@@ -90,10 +100,11 @@ namespace CoursesWorkshop.Controllers
         [HttpPost]
         public IActionResult AddByInstructorId(Course model)
         {
-            _context.Courses.Add(model);
-            _context.SaveChanges();
+            //_context.Courses.Add(model);
+            //_context.SaveChanges();
+            _courseRepo.Create(model);
 
-            return RedirectToAction("Index", "Instructor");
+            return RedirectToAction("Detail", "Instructor", new { id = model.InstructorId });
         }
     }
 }
