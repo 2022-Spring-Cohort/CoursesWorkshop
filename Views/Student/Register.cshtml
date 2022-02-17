@@ -1,0 +1,25 @@
+﻿@model Student
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>@Model.FirstName @Model.LastName</h1>
+<p>@Model.AcademicStanding - @Model.Email</p>
+
+<form asp-action="Register">
+    <h2>Courses To Enroll</h2>
+    <div class="text-success">@ViewBag.Success</div>
+    <div class="form-group">
+        <label class="control-label" asp-for="Enrollment"></label>
+        <select class="form-control" name="CourseId" id="CourseId" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))">
+            <option selected disabled>---SELECT A COURSE---</option>
+        </select>
+        
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="submit" value="Register" />
+    </div>
+</form>
+

@@ -11,5 +11,8 @@ namespace CoursesWorkshop.Models
         public string Email { get; set; }
         public string Department { get; set; }
         public virtual List<Course> Courses { get; set; }
+
+        public string? ApplicationUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

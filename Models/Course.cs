@@ -1,4 +1,6 @@
-﻿namespace CoursesWorkshop.Models
+﻿using System.Collections.Generic;
+
+namespace CoursesWorkshop.Models
 {
     public class Course
     {
@@ -9,5 +11,7 @@
         public virtual Instructor Instructor { get; set; }
         public string Building { get; set; }
         public int RoomNumber { get; set; }
+        //public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<CourseStudent> Roster { get; set; }
     }
 }

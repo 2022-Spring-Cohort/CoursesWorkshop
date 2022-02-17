@@ -31,6 +31,11 @@ namespace CoursesWorkshop
             //services.AddScoped<IInstructorRepository, InstructorRepository>();
             services.AddScoped<IGenericRepository<Course>, GenericRepository<Course>>();
             services.AddScoped<IGenericRepository<Instructor>, GenericRepository<Instructor>>();
+
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+               .AddEntityFrameworkStores<ApplicationContext>();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +56,8 @@ namespace CoursesWorkshop
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -58,6 +65,7 @@ namespace CoursesWorkshop
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

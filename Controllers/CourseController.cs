@@ -12,17 +12,28 @@ namespace CoursesWorkshop.Controllers
         private ApplicationContext _context;
         private IGenericRepository<Course> _courseRepo;
         private IGenericRepository<Instructor> _instructorRepo;
+        private ApplicationUser _user;
         public CourseController(IGenericRepository<Course> courseRepo, IGenericRepository<Instructor> instructorRepo)
         {
             _courseRepo = new GenericRepository<Course>();
             _instructorRepo = new GenericRepository<Instructor>();
 
             _context = new ApplicationContext();
+            
+            if (User.Identity.IsAuthenticated)
+            {
+                _user = _context.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            }
+            
         }
 
         public IActionResult Index()
         {
-            //return View(_repo.GetAll());
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(_context.Courses.Where(c => c.DepartmentCode == _user.DepartmentCode).ToList());
+            }
 
             return View(_context.Courses.ToList());
         }
