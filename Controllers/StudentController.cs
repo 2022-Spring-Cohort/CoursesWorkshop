@@ -65,56 +65,31 @@ namespace CoursesWorkshop.Controllers
             return View(student);
         }
 
-        // GET: Student/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            Instructor selectedInstructor = _context.Instructors.Find(id);
 
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-            return View(student);
+            return View(selectedInstructor);
         }
 
-        // POST: Student/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,PreferredName,AcademicStanding")] Student student)
+        public IActionResult Edit(Instructor instructor)
         {
-            if (id != student.Id)
-            {
-                return NotFound();
-            }
+            Instructor instructorToUpdate = _context.Instructors.Find(instructor.Id);
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentExists(student.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(student);
+            instructorToUpdate.FirstName = instructor.FirstName;
+            instructorToUpdate.LastName = String.IsNullOrEmpty(instructor.LastName) ? instructorToUpdate.LastName : instructor.LastName;
+            //instructorToUpdate.Department
+
+
+
+            //_context.Instructors.Update(instructor);
+            _context.SaveChanges();
+
+
+            return View();
         }
+       
 
         // GET: Student/Delete/5
         public async Task<IActionResult> Delete(int? id)
