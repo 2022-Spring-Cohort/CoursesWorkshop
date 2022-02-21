@@ -10,16 +10,7 @@
     <h2>Name: @instructor.FullName</h2>
     <p>Department: @instructor.Department</p>
     <a class="btn btn-primary btn-sm" href="/Instructor/Detail/@instructor.Id">View Details</a>
-    @*@if(instructor.Courses != null)
-    {
-        <h3>Courses</h3>
-        <a class="btn btn-primary btn-sm" href="/Course/AddByInstructorId/?instructorId=@instructor.Id">Add Course</a>
-        <ul>
-            @foreach(Course course in instructor.Courses)
-            {
-                <li>@course.Name - @course.DepartmentCode - @course.Building @course.RoomNumber</li>
-            }
-        </ul>
-    }*@
+    <a class="btn btn-danger btn-sm" href="/Instructor/Delete/@instructor.Id">Delete Instructor</a>
+    
 
 }

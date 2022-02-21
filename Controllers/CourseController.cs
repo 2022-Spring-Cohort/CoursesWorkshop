@@ -20,10 +20,10 @@ namespace CoursesWorkshop.Controllers
 
             _context = new ApplicationContext();
             
-            if (User.Identity.IsAuthenticated)
-            {
-                _user = _context.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
-            }
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    _user = _context.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            //}
             
         }
 
@@ -64,7 +64,7 @@ namespace CoursesWorkshop.Controllers
             // TODO: Get Instructors
             ViewBag.Instructors = _instructorRepo.GetAll();
 
-            return View(new Course() { });
+            return View(new Course() { InstructorId = 1, Instructor = _context.Instructors.Find(1) });
         }
 
         [HttpPost]

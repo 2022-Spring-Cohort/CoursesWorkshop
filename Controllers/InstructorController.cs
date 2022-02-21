@@ -59,6 +59,29 @@ namespace CoursesWorkshop.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Delete(int id)
+        {
+            return View(_context.Instructors.Find(id));
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirm(int id, Instructor instructor)
+        {
+            Instructor instructorToDelete = _context.Instructors.Where(i => i.Id == instructor.Id).FirstOrDefault();
+            if (instructorToDelete != null)
+            {
+                _context.Instructors.Remove(instructorToDelete);
+                _context.SaveChanges();
+            }
+            else
+            {
+                return NotFound();
+            }
+
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Detail(int id)
         {
             Instructor model = _repo.GetById(id);
