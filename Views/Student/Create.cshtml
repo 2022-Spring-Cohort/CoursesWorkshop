@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    List<string> Standing = ViewBag.AcademicStandings;
 }
 
 <h1>Create</h1>
@@ -28,14 +29,29 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Do you have a preferred name?</label>
+                <input type="checkbox" value="qwerqwerqwaer" id="HasPreferredName" name="HasPreferredName" />
+            </div>
+            <div class="form-group">
                 <label asp-for="PreferredName" class="control-label"></label>
                 <input asp-for="PreferredName" class="form-control" />
                 <span asp-validation-for="PreferredName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            
+            @*<div class="form-group">
                 <label asp-for="AcademicStanding" class="control-label"></label>
                 <input asp-for="AcademicStanding" class="form-control" />
                 <span asp-validation-for="AcademicStanding" class="text-danger"></span>
+            </div>*@
+
+            <div class="form-group">
+                <label class="control-label">What is your academic standing?</label>
+                @foreach(string year in Standing)
+                {
+                    <input type="radio" id="@year" name="AcademicStandingChoice" value="@year" />
+                    <label for="@year">@year</label>
+                }
+                
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CoursesWorkshop.Models
 {
@@ -12,5 +13,6 @@ namespace CoursesWorkshop.Models
         public string AcademicStanding { get; set; }
         //public virtual ICollection<Course> Courses { get; set; }
         public virtual ICollection<CourseStudent> Enrollment { get; set; }
+        //public virtual bool HasPreferredName { get { return String.IsNullOrEmpty(this.PreferredName) ? false : true; } }
     }
 }

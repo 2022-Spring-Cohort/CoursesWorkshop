@@ -46,6 +46,10 @@ namespace CoursesWorkshop.Controllers
         // GET: Student/Create
         public IActionResult Create()
         {
+            List<string> Standing = new List<string>() { "Freshman", "Sophmore", "Junior", "Senior" };
+
+            ViewBag.AcademicStandings = Standing;
+
             return View();
         }
 
@@ -54,10 +58,14 @@ namespace CoursesWorkshop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PreferredName,AcademicStanding")] Student student)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PreferredName,AcademicStanding")] Student student, string HasPreferredName, string AcademicStandingChoice)
         {
             if (ModelState.IsValid)
             {
+                if (!String.IsNullOrEmpty(AcademicStandingChoice))
+                {
+                    student.AcademicStanding = AcademicStandingChoice;
+                }
                 _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

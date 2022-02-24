@@ -1,58 +1,53 @@
-﻿@model CoursesWorkshop.Models.Course
-
+﻿@model CourseViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
 @{
-    ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<form asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Course.Id" />
 
-<h4>Course</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="text-success">@ViewBag.Success</div>
-            <div class="text-danger">@ViewBag.Error</div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DepartmentCode" class="control-label"></label>
-                <input asp-for="DepartmentCode" class="form-control" />
-                <span asp-validation-for="DepartmentCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InstructorId" class="control-label"></label>
-                <select asp-for="InstructorId" class="form-control" asp-items="@(new SelectList(ViewBag.Instructors, "Id", "FullName"))">
-                    <option selected disabled>---SELECT INSTRUCTOR---</option>
-                </select>
-                <span asp-validation-for="InstructorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Building" class="control-label"></label>
-                <input asp-for="Building" class="form-control" />
-                <span asp-validation-for="Building" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoomNumber" class="control-label"></label>
-                <input asp-for="RoomNumber" class="form-control" />
-                <span asp-validation-for="RoomNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="form-group">
+        <label class="control-label" asp-for="Course.Name"></label>
+        <input asp-for="Course.Name" class="form-control" />
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="form-group">
+        <label class="control-label" asp-for="Course.DepartmentCode"></label>
+        <input asp-for="Course.DepartmentCode" class="form-control" />
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <div class="form-group">
+        <label class="control-label" asp-for="Course.Image"></label>
+        <input type="hidden" asp-for="Course.Image" />
+        @if (!String.IsNullOrEmpty(Model.Course.Image))
+        {
+            <p>@Model.Course.Image | <a class="btn btn-danger btn-sm" href="/Course/RemoveImage/@Model.Course.Id">Delete</a></p>
+        }
+        @*<input asp-for="Course.Image" class="form-control" />*@
+        <input type="file" id="CourseImage" name="CourseImage" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" asp-for="Course.Building"></label>
+        <input asp-for="Course.Building" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" asp-for="Course.RoomNumber"></label>
+        <input asp-for="Course.RoomNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" asp-for="Course.InstructorId"></label>
+        <select asp-for="Course.InstructorId" class="form-control" asp-items="@(new SelectList(Model.Instructors, "Id", "FullName"))">
+            <option disabled selected>---SELECT INSTRUCTOR---</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Update" class="form-control" />
+    </div>
+
+</form>

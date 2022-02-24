@@ -112,8 +112,8 @@ namespace CoursesWorkshop.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -157,8 +157,8 @@ namespace CoursesWorkshop.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -203,7 +203,8 @@ namespace CoursesWorkshop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InstructorId = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InstructorId = table.Column<int>(type: "int", nullable: true),
                     Building = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoomNumber = table.Column<int>(type: "int", nullable: false)
                 },
@@ -215,7 +216,7 @@ namespace CoursesWorkshop.Migrations
                         column: x => x.InstructorId,
                         principalTable: "Instructors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,18 +266,18 @@ namespace CoursesWorkshop.Migrations
 
             migrationBuilder.InsertData(
                 table: "Courses",
-                columns: new[] { "Id", "Building", "DepartmentCode", "InstructorId", "Name", "RoomNumber" },
-                values: new object[] { 1, "Museum", "BIOC", 1, "Biochemistry", 1234 });
+                columns: new[] { "Id", "Building", "DepartmentCode", "Image", "InstructorId", "Name", "RoomNumber" },
+                values: new object[] { 1, "Museum", "BIOC", null, 1, "Biochemistry", 1234 });
 
             migrationBuilder.InsertData(
                 table: "Courses",
-                columns: new[] { "Id", "Building", "DepartmentCode", "InstructorId", "Name", "RoomNumber" },
-                values: new object[] { 2, "Empire State Building", "PSYC", 2, "Psychology", 205 });
+                columns: new[] { "Id", "Building", "DepartmentCode", "Image", "InstructorId", "Name", "RoomNumber" },
+                values: new object[] { 2, "Empire State Building", "PSYC", null, 2, "Psychology", 205 });
 
             migrationBuilder.InsertData(
                 table: "Courses",
-                columns: new[] { "Id", "Building", "DepartmentCode", "InstructorId", "Name", "RoomNumber" },
-                values: new object[] { 3, "Sears Tower", "MATH", 3, "Calculus", 8745 });
+                columns: new[] { "Id", "Building", "DepartmentCode", "Image", "InstructorId", "Name", "RoomNumber" },
+                values: new object[] { 3, "Sears Tower", "MATH", null, 3, "Calculus", 8745 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

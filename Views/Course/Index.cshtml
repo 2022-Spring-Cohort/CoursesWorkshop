@@ -6,9 +6,30 @@
 }
 
 <h1>Courses</h1>
-<a class="btn btn-primary btn-sm" href="/Course/Add">Add Course</a>
+<a class="btn btn-primary btn-sm" href="/Course/Create">Add Course</a>
 
 @foreach(Course course in Model)
 {
-    <h2><a href="/Course/Detail/@course.Id">@course.Name</a> | <a class="btn btn-danger btn-sm" href="/Course/Delete/@course.Id">Delete</a></h2>
+    <section class="two-column">
+        <div class="instructor">
+            <p>@course.DepartmentCode</p>
+            <h3>
+                @if (!String.IsNullOrEmpty(course.Image))
+                {
+                    <img src="/uploads/@course.Image" class="profile" />
+                }
+                else
+                {
+                    <img src="/images/Jack-Black-headshot_700x700.jpg" class="profile" />
+                }
+                
+            </h3>
+        </div>
+        <div class="course">
+            <h2><a href="/Course/Detail/@course.Id">@course.Name</a></h2>
+            <a class="btn btn-danger btn-sm" href="/Course/Delete/@course.Id">Delete</a>
+        </div>
+        
+    </section>
+     
 }

@@ -6,16 +6,30 @@ namespace CoursesWorkshop
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Student> Students { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Instructor> Instructors { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
 
-        public DbSet<CourseStudent> CourseStudents { get; set; }
+        public virtual DbSet<CourseStudent> CourseStudents { get; set; }
 
+        public ApplicationContext()
+        {
+
+        }
+
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        {
+
+        }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=Courses2022; Trusted_connection=True");
-            builder.UseLazyLoadingProxies();
+            if (!builder.IsConfigured)
+            {
+                builder.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=Courses2022; Trusted_connection=True");
+                builder.UseLazyLoadingProxies();
+            }
+            
             
         }
 
